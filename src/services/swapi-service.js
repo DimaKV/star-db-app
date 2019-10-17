@@ -96,6 +96,18 @@ class SwapiService{
          return item.url.match(idRegExp)[1];
     }
 
+    getPersonImgUrl = (item) => {
+        return `https://starwars-visualguide.com/assets/img/characters/${item.id}.jpg`
+    }
+
+    getStarshipImgUrl = (item) => {
+        return `https://starwars-visualguide.com/assets/img/starship/${item.id}.jpg`
+    }
+
+    getPlanetImgUrl = (item) => {
+        return `https://starwars-visualguide.com/assets/img/starship/${item.id}.jpg`
+    }
+
 
 };
 

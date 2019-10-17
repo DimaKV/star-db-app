@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 
-import './person-details.css';
+import './item-details.css';
 
 import SwapiService from '../../services';
 
 import Spinner from '../spinner';
+import ErrorButton from '../error-button';
 
-export default class PersonDetails extends Component {
+
+
+export default class ItemDetails extends Component {
   constructor(props){
     super(props);
     this.state = {
-      person: null,      
+      item: null,
+      image: null,      
       loading: true
     }
   }
@@ -18,7 +22,7 @@ export default class PersonDetails extends Component {
   swapi = new SwapiService();
 
   componentDidMount(){    
-    this.getPerson();
+    this.getItem();
   }
 
   componentDidUpdate(prevProps){
@@ -27,20 +31,23 @@ export default class PersonDetails extends Component {
       this.setState({
         loading: true
       })
-      this.getPerson();
+      this.getItem();
     }    
     
   }
 
-  getPerson = () =>{
-    let {activeItem} = this.props;
+  getItem = () =>{
+    
+    let {activeItem, getData, getImgUrl} = this.props;
+    
     if(!activeItem){
       return;
     }
-    this.swapi.getPerson(activeItem)
-      .then( (person) => {
+    getData(activeItem)
+      .then( (item) => {
         this.setState({
-          person,
+          item: item,
+          image: getImgUrl(item),
           loading: false
         })
       } )
@@ -49,38 +56,33 @@ export default class PersonDetails extends Component {
   render() {
 
     
-    const {loading} = this.state;
-    if(!this.state.person){
+    const {loading, item} = this.state;
+    if(!this.state.item){
       return(
         <span>Select someone from a list please</span>
       );
     }
-    const {id, name, gender, birthYear, eyeColor} = this.state.person;
+    const {id, name, gender, birthYear, eyeColor} = this.state.item;
+    const {image} = this.state;
     if (loading) return <Spinner/>
 
     return (
       <div className="person-details card">
         <img className="person-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+          src={image} />
 
+        
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
+            {React.Children.map(this.props.children, (child) => {
+              return React.cloneElement(child, {item});
+            })}           
           </ul>
+          <ErrorButton />
         </div>
       </div>
+      
     )
   }
 }

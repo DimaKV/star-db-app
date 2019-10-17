@@ -4,7 +4,7 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
 import ItemList from '../item-list';
-import PersonDetails from '../person-details';
+
 
 import './app.css';
 
@@ -61,18 +61,7 @@ export default class App extends Component{
             <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
         </div>        
 
-        <PeoplePage />
-
-        <div className="row mb2">
-          <div className="col-md-6">
-            <ItemList
-                getData = {this.swapi.getAllStarships}
-                onItemSelected = {this.onItemSelected}/>
-          </div>
-          <div className="col-md-6">
-            <PersonDetails activeItem = {this.state.activeItem} />
-          </div>
-        </div>
+        <PeoplePage />        
         
       </div>
     );
