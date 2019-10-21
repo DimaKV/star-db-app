@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { withData } from '../hoc-helpers';
-import SwapiService from '../../services';
+
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
@@ -43,7 +42,6 @@ const ItemList = (props) => {
 
 }
 
-const swapi = new SwapiService();
 
-export default withData(ItemList, swapi.getPeople);
+export default ItemList;
 

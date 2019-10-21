@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import ItemDetails from '../item-details';
 import ItemList from '../item-list';
+import { PersonList, PersonDetails } from '../sw-components';
 import Record from '../record';
 
 import Row from '../row';
@@ -37,7 +38,7 @@ export default class PeoplePage extends Component{
     constructor(){
         super()
         this.state = {
-            activeItem: 3           
+            activeItem: 1           
         }
 
 
@@ -54,20 +55,12 @@ export default class PeoplePage extends Component{
 
     render(){
 
-        const itemList = <ItemList
-                            getData = {this.swapi.getPeople}                            
-                            onItemSelected = {this.onItemSelected}>
-                                { (item) => `${item.name} (${item.birthYear})` }
-                        </ItemList>
+        const itemList = (
+            <PersonList onItemSelected = {this.onItemSelected} />
+        );
         const personalDetails = ( 
             <ErrorBoundary>
-                <ItemDetails
-                    getData = {this.swapi.getPerson}
-                    getImgUrl = {this.swapi.getPersonImgUrl} 
-                    activeItem = {this.state.activeItem} >
-                        <Record field='gender' label='Gender' />
-                        <Record field='eyeColor' label='Eye Color' />
-                </ItemDetails>
+                <PersonDetails activeItem = {this.state.activeItem} />                
             </ErrorBoundary>
             );
 

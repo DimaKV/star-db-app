@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
 
-import SwapiServi from '../../services/index';
-
 import './random-planet.css';
-import SwapiService from '../../services';
+//import SwapiService from '../../services';
 
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
-export default class RandomPlanet extends Component {
+import {withSS} from '../hoc-helpers/';
+
+class RandomPlanet extends Component {
 
   constructor(){
     super();
     this.state = {
-      planet: {
-        id: null,
-        name: null,
-        rotationPeriod: null,
-        poulation: null,
-        diameter: null
-      },
+      planet: { },
       loading: true,
       error: false
     }    
   }
 
-  swapi = new SwapiService();
-
+  
   componentDidMount() {    
     this.updatePlanet();
     this.intervalPlanet = setInterval(this.updatePlanet, 3000);
@@ -36,13 +29,11 @@ export default class RandomPlanet extends Component {
     clearInterval(this.intervalPlanet);
   }
 
-
-
  
   //получаем данные по API
   updatePlanet = () => {
     let id = Math.floor(Math.random()*17 + 3);
-    this.swapi.getPlanet(id)
+    this.props.getData(id)
       .then( this.onPlanetLoaded )
       .catch(this.onErrorShow);   
   }
@@ -68,9 +59,8 @@ onErrorShow = () => {
 
     const errorMsg = error ? <ErrorIndicator /> : null;
     const spinner = loading ? <Spinner/> : null;
-    const content = (loading || error) ? null : <PlanetView planet={planet}/>
-
-    // return <Spinner/>
+    const content = (loading || error) ? null : <PlanetView planet={planet} getPlanetImg={this.props.getImg}/>
+    
     return (      
         <div className="random-planet jumbotron rounded">
           {spinner}
@@ -81,14 +71,24 @@ onErrorShow = () => {
   }
 };
 
-//отдельный компонент
-const PlanetView = ({planet}) => {
-  const {id, name, rotationPeriod, population, diameter} = planet;
+const mapProps = (swapi) => {
+  return {
+    getData: swapi.getPlanet,
+    getImg: swapi.getPlanetImgUrl
+  }
+}
 
+export default withSS(RandomPlanet, mapProps);
+
+//отдельный компонент
+const PlanetView = ({planet, getPlanetImg}) => {
+  const {id, name, rotationPeriod, population, diameter} = planet;  
   return(
     <React.Fragment>
       <img alt='' className="planet-image"
-           src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}/>
+          //  src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+          src={getPlanetImg(planet)}
+           />
       <div>
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
@@ -109,3 +109,4 @@ const PlanetView = ({planet}) => {
     </React.Fragment>
   )
 }
+

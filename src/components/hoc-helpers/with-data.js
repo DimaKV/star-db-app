@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-const withData = (View, getData) => {
+const withData = (View) => {
   return class extends Component{      
 
   constructor(props){
@@ -13,8 +13,9 @@ const withData = (View, getData) => {
     }
   }  
 
-  componentDidMount(){    
-    this.getPeople();    
+  componentDidMount(){
+            
+    this.update();    
   }
 
   onError() {
@@ -25,8 +26,8 @@ const withData = (View, getData) => {
   }
 
   //получаем список людей через API
-  getPeople = () => {      
-    getData()
+  update = () => {      
+   this.props.getData()
       .then( (data) => {        
         this.setState({
           data,

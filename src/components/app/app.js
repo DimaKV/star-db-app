@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from '../people-page';
-import ItemList from '../item-list';
 
 
 import './app.css';
@@ -11,6 +10,10 @@ import './app.css';
 import ErrorIndicator from '../error-indicator';
 
 import SwapiService from '../../services';
+
+import DummySwapiService from '../../services/dummy-service';
+
+import { SSProvider } from '../swapi-service-context';
 
 export default class App extends Component{
 
@@ -24,6 +27,7 @@ export default class App extends Component{
   }
 
   swapi = new SwapiService();
+  dummy = new DummySwapiService();
 
   componentDidCatch(){
     console.log('catch');
@@ -53,16 +57,17 @@ export default class App extends Component{
     const randomPlanet = (this.state.showPlanet) ? <RandomPlanet /> : null;    
     return (
       <div>
-        <Header />
-        
+        <SSProvider value = {this.swapi}>
+          <Header />
+          
         {randomPlanet}
   
-        <div className="buttonToggle">
-            <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
-        </div>        
+          <div className="buttonToggle">
+              <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
+          </div>        
 
-        <PeoplePage />        
-        
+          <PeoplePage />        
+        </SSProvider>        
       </div>
     );
 

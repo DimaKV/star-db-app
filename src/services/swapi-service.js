@@ -105,7 +105,7 @@ class SwapiService{
     }
 
     getPlanetImgUrl = (item) => {
-        return `https://starwars-visualguide.com/assets/img/starship/${item.id}.jpg`
+        return `https://starwars-visualguide.com/assets/img/planets/${item.id}.jpg`
     }
 
 
