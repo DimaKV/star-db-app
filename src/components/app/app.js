@@ -22,18 +22,30 @@ export default class App extends Component{
     this.state = {
       showPlanet: true,
       activeItem: null,
-      error: false
+      error: false,
+      swapi : new SwapiService()
     }
   }
 
-  swapi = new SwapiService();
-  dummy = new DummySwapiService();
+  // swapi = new SwapiService();
+  // dummy = new DummySwapiService();
 
   componentDidCatch(){
     console.log('catch');
     this.setState({
       error: true
     });
+  }
+
+  onChangeServer = () =>{
+    this.setState( (prevState) => {
+      const newSwapi = (prevState.swapi instanceof SwapiService) ? 
+                      new DummySwapiService : new SwapiService;
+      console.log(newSwapi);
+      return {
+        swapi: newSwapi
+      }
+    } );
   }
 
   onShowPlanet = () => {
@@ -57,8 +69,8 @@ export default class App extends Component{
     const randomPlanet = (this.state.showPlanet) ? <RandomPlanet /> : null;    
     return (
       <div>
-        <SSProvider value = {this.swapi}>
-          <Header />
+        <SSProvider value = {this.state.swapi}>
+          <Header onChangeServer = {this.onChangeServer} />
           
         {randomPlanet}
   

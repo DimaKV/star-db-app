@@ -44,7 +44,7 @@ export default class PeoplePage extends Component{
 
     }
 
-    swapi = new SwapiService();
+    // swapi = new SwapiService();
 
 
     onItemSelected = (id) => {

@@ -26,7 +26,8 @@ export default class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps){
-    // console.log(this.props.activeItem,  prevProps.activeItem)
+    // console.log(this.props.swapi,  prevProps.swapi)
+    // || this.props.swapi != prevProps.swapi
     if (this.props.activeItem != prevProps.activeItem) {
       this.setState({
         loading: true

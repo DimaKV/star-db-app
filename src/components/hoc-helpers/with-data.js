@@ -13,10 +13,13 @@ const withData = (View) => {
     }
   }  
 
-  componentDidMount(){
-            
+  componentDidMount(){            
     this.update();    
   }
+
+  // componentDidUpdate(){
+  //   console.log(this.props.swapi)
+  // }
 
   onError() {
     this.setState({
