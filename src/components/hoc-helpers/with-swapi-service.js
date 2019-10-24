@@ -5,7 +5,7 @@ import {SSConsumer} from '../swapi-service-context/';
 
 const withSS = (Wrapped, mapMethodsToProps) => {
     
-    return (props) => {
+    return (props) => {        
         return(
             <SSConsumer>
                 {

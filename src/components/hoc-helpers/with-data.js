@@ -17,9 +17,12 @@ const withData = (View) => {
     this.update();    
   }
 
-  // componentDidUpdate(){
-  //   console.log(this.props.swapi)
-  // }
+  //проверяе на сменился ли источник данных
+  componentDidUpdate(prevProps){
+    if(prevProps.getData != this.props.getData){
+      this.update();
+    }
+  }
 
   onError() {
     this.setState({

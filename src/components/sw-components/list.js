@@ -41,7 +41,8 @@ const mapPlanetMethodsToProps = (swapi) => {
 }
 
 const PersonList = withSS(
-                withData( withChildFn(ItemList, renderName)), mapPersonMethodsToProps
+                    withData( withChildFn(ItemList, renderName)
+                ), mapPersonMethodsToProps
 );
 const StarshipList = withSS(
                 withData( withChildFn(ItemList, renderStarship), mapStarshipMethodsToProps)

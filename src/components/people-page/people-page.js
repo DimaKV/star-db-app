@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 
-import ItemDetails from '../item-details';
-import ItemList from '../item-list';
+
 import { PersonList, PersonDetails } from '../sw-components';
-import Record from '../record';
 
 import Row from '../row';
 
 
-import SwapiService from '../../services';
+
 import ErrorIndicator from '../error-indicator';
 
 

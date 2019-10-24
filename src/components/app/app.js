@@ -40,8 +40,7 @@ export default class App extends Component{
   onChangeServer = () =>{
     this.setState( (prevState) => {
       const newSwapi = (prevState.swapi instanceof SwapiService) ? 
-                      new DummySwapiService : new SwapiService;
-      console.log(newSwapi);
+                      new DummySwapiService : new SwapiService;      
       return {
         swapi: newSwapi
       }

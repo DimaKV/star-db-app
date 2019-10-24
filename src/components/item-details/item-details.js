@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './item-details.css';
 
-import SwapiService from '../../services';
+// import SwapiService from '../../services';
 
 import Spinner from '../spinner';
 import ErrorButton from '../error-button';
@@ -19,16 +19,16 @@ export default class ItemDetails extends Component {
     }
   }
 
-  swapi = new SwapiService();
+  // swapi = new SwapiService();
 
   componentDidMount(){    
     this.getItem();
   }
 
-  componentDidUpdate(prevProps){
-    // console.log(this.props.swapi,  prevProps.swapi)
-    // || this.props.swapi != prevProps.swapi
-    if (this.props.activeItem != prevProps.activeItem) {
+  //проверяем семнился ли актвивный элемент или на смену источика данных
+  componentDidUpdate(prevProps){    
+    if (this.props.activeItem != prevProps.activeItem || this.props.getData != prevProps.getData) {
+      
       this.setState({
         loading: true
       })
@@ -39,13 +39,13 @@ export default class ItemDetails extends Component {
 
   getItem = () =>{
     
-    let {activeItem, getData, getImgUrl} = this.props;
+    let {activeItem, getImgUrl} = this.props;
     
     if(!activeItem){
       return;
     }
-    getData(activeItem)
-      .then( (item) => {
+    this.props.getData(activeItem)
+      .then( (item) => {        
         this.setState({
           item: item,
           image: getImgUrl(item),
