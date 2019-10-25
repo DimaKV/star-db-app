@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page';
+import { PeoplePage, PlanetPage, StarshipPage } from '../pages';
 
 
 import './app.css';
@@ -77,7 +77,10 @@ export default class App extends Component{
               <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
           </div>        
 
-          <PeoplePage />        
+          <PeoplePage />
+          <StarshipPage />
+          <PlanetPage />
+
         </SSProvider>        
       </div>
     );

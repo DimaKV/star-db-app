@@ -1,36 +1,9 @@
 import React, {Component} from 'react';
 
-
 import { PersonList, PersonDetails } from '../sw-components';
-
 import Row from '../row';
+import ErrorBoundary from '../error-boundary';
 
-
-
-import ErrorIndicator from '../error-indicator';
-
-
-class ErrorBoundary extends Component{
-    constructor(){
-        super();
-        this.state = {
-            error: false
-        }
-    }
-
-    componentDidCatch(){
-        this.setState({
-            error: true
-        })
-    }
-
-    render(){
-        if (this.state.error){
-            return <ErrorIndicator />
-        }
-        return this.props.children;
-    }
-}
 
 export default class PeoplePage extends Component{
     constructor(){
@@ -38,12 +11,7 @@ export default class PeoplePage extends Component{
         this.state = {
             activeItem: 1           
         }
-
-
     }
-
-    // swapi = new SwapiService();
-
 
     onItemSelected = (id) => {
         this.setState({

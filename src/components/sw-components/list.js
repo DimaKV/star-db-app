@@ -45,10 +45,12 @@ const PersonList = withSS(
                 ), mapPersonMethodsToProps
 );
 const StarshipList = withSS(
-                withData( withChildFn(ItemList, renderStarship), mapStarshipMethodsToProps)
+                withData( withChildFn(ItemList, renderStarship) 
+                ), mapStarshipMethodsToProps
 );
 const PlanetList = withSS(
-                withData( withChildFn(ItemList, renderPlanet), mapPlanetMethodsToProps)
+                    withData( withChildFn(ItemList, renderPlanet)
+                    ), mapPlanetMethodsToProps
 );
 
 

@@ -1,14 +1,10 @@
 import React from 'react';
 
-
-import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator';
-
 import './item-list.css';
 
 const ItemList = (props) => {  
 
-  //генерпруем список имен на основании данных из state
+  //генерпруем список имен/названий на основании данных из state
   const generateItems = (arr) => {
     return arr.map( (item) => {
       const label = props.children(item);
@@ -24,24 +20,16 @@ const ItemList = (props) => {
     } );
   }
 
-  const {loading, error, data} = props;   
-  const itemsList = generateItems(data);
-
-  const showPeople = (loading || error) ? null : itemsList;
-  const spinner = (loading) ? <Spinner/> : null;
-  const showError = (error) ? <ErrorIndicator/> : null;
+  const {data} = props;   
+  const itemsList = generateItems(data);  
 
   return (
-    <ul className="item-list list-group">
-      {spinner}
-      {showError}
-      {showPeople} 
+    <ul className="item-list list-group">      
+      {itemsList}     
     </ul>
-  );
-  
+  );  
 
 }
-
 
 export default ItemList;
 
