@@ -5,8 +5,11 @@ import './random-planet.css';
 
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
+import PropTypes from 'prop-types';
 
 import {withSS} from '../hoc-helpers/';
+
+
 
 class RandomPlanet extends Component {
 
@@ -19,14 +22,27 @@ class RandomPlanet extends Component {
     }    
   }
 
+
+  static defaultProps = {
+    updateInterval : 7000
+  };
+
+  static propTypes = {
+    updateInterval: PropTypes.number
+  }
+
   
-  componentDidMount() {    
+  componentDidMount() {
+    // console.log(this.props);
+    const { updateInterval } = this.props;    
     this.updatePlanet();
-    this.intervalPlanet = setInterval(this.updatePlanet, 3000);
+    this.intervalPlanet = setInterval(this.updatePlanet, updateInterval);
+    // console.log( this.intervalPlanet);
   };
 
   componentWillUnmount(){
     clearInterval(this.intervalPlanet);
+    // console.log( this.intervalPlanet);
   }
 
  
@@ -70,6 +86,8 @@ onErrorShow = () => {
     );
   }
 };
+
+
 
 const mapProps = (swapi) => {
   return {

@@ -4,6 +4,8 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import { PeoplePage, PlanetPage, StarshipPage } from '../pages';
 
+import { BrowserRouter, Route } from 'react-router-dom';
+
 
 import './app.css';
 
@@ -65,21 +67,23 @@ export default class App extends Component{
       return <ErrorIndicator/>
     }
 
-    const randomPlanet = (this.state.showPlanet) ? <RandomPlanet /> : null;    
+    const randomPlanet = (this.state.showPlanet) ? <RandomPlanet updateInterval={8000} /> : null;    
     return (
       <div>
         <SSProvider value = {this.state.swapi}>
-          <Header onChangeServer = {this.onChangeServer} />
-          
-        {randomPlanet}
-  
-          <div className="buttonToggle">
-              <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
-          </div>        
-
-          <PeoplePage />
-          <StarshipPage />
-          <PlanetPage />
+        <BrowserRouter>
+            <Header onChangeServer = {this.onChangeServer} />
+            
+            {randomPlanet}
+    
+            <div className="buttonToggle">
+                <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
+            </div>        
+            <Route path="/" render={() => <h2>Welcome to Star DB</h2>} exact = {true}></Route>
+            <Route path="/people" component={PeoplePage} />
+            <Route path="/starships" component={StarshipPage} />
+            <Route path="/planets" component={PlanetPage} />
+          </BrowserRouter>     
 
         </SSProvider>        
       </div>
