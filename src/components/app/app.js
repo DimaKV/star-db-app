@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 
+import '../../bootstrap.min.css';
+
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import { PeoplePage, PlanetPage, StarshipPage } from '../pages';
+import { PeoplePage, PlanetPage, StarshipPage, LoginPage, SecretPage } from '../pages';
+import { StarshipDetails } from '../sw-components';
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 
 import './app.css';
@@ -25,6 +28,7 @@ export default class App extends Component{
       showPlanet: true,
       activeItem: null,
       error: false,
+      isLogged: false,
       swapi : new SwapiService()
     }
   }
@@ -42,7 +46,7 @@ export default class App extends Component{
   onChangeServer = () =>{
     this.setState( (prevState) => {
       const newSwapi = (prevState.swapi instanceof SwapiService) ? 
-                      new DummySwapiService : new SwapiService;      
+                      new DummySwapiService() : new SwapiService();      
       return {
         swapi: newSwapi
       }
@@ -60,6 +64,20 @@ export default class App extends Component{
       activeItem: id
     });
   }
+
+  onLoging = () => {
+    this.setState({
+      isLogged: true
+    })
+  }
+
+  onLogout = () => {
+    this.setState({
+      isLogged: false
+    })
+  }
+
+
   
   render(){
 
@@ -79,10 +97,39 @@ export default class App extends Component{
             <div className="buttonToggle">
                 <button className = "btn btn-warning" onClick={this.onShowPlanet}>Toggle Random Planet</button>
             </div>        
-            <Route path="/" render={() => <h2>Welcome to Star DB</h2>} exact = {true}></Route>
-            <Route path="/people" component={PeoplePage} />
-            <Route path="/starships" component={StarshipPage} />
-            <Route path="/planets" component={PlanetPage} />
+            <Switch>
+              
+              
+              <Route path="/" render={() => <div className="jumbotron"><h2>Welcome to Star DB</h2></div>} exact = {true}></Route>
+              <Route path="/people/:id?" component={PeoplePage} />
+              
+              <Route path="/planets" component={PlanetPage} />
+
+              <Route path="/starships" component={StarshipPage} exact />
+
+              <Route path="/starships/:id"
+                    render = { ( {match} ) => {
+                      console.log(match);
+                      return <StarshipDetails activeItem = {match.params.id}/>
+                    } } 
+              />
+
+              <Route path="/login" 
+                render={ () => {
+                  return <LoginPage onLoging = {this.onLoging}                                    
+                                    isLogged = {this.state.isLogged} />
+                } } 
+              />
+
+              <Route path="/secret" render={ () => {
+                return <SecretPage isLogged = {this.state.isLogged}
+                                    onLogout = {this.onLogout}/>
+              } } />
+
+              <Route render = { () => <h2>Page not found</h2> } />
+
+            </Switch>
+
           </BrowserRouter>     
 
         </SSProvider>        

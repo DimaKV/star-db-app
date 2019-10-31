@@ -100,7 +100,7 @@ export default withSS(RandomPlanet, mapProps);
 
 //отдельный компонент
 const PlanetView = ({planet, getPlanetImg}) => {
-  const {id, name, rotationPeriod, population, diameter} = planet;  
+  const {name, rotationPeriod, population, diameter} = planet;  
   return(
     <React.Fragment>
       <img alt='' className="planet-image"

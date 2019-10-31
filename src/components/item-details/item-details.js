@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import './item-details.css';
 
-// import SwapiService from '../../services';
-
 import Spinner from '../spinner';
 import ErrorButton from '../error-button';
 
@@ -19,15 +17,14 @@ export default class ItemDetails extends Component {
     }
   }
 
-  // swapi = new SwapiService();
-
+  
   componentDidMount(){    
     this.getItem();
   }
 
   //проверяем семнился ли актвивный элемент или на смену источика данных
   componentDidUpdate(prevProps){    
-    if (this.props.activeItem != prevProps.activeItem || this.props.getData != prevProps.getData) {
+    if (this.props.activeItem !== prevProps.activeItem || this.props.getData !== prevProps.getData) {
       
       this.setState({
         loading: true
@@ -63,13 +60,13 @@ export default class ItemDetails extends Component {
         <span>Select someone from a list please</span>
       );
     }
-    const {id, name, gender, birthYear, eyeColor} = this.state.item;
+    const {name} = this.state.item;
     const {image} = this.state;
     if (loading) return <Spinner/>
 
     return (
       <div className="person-details card">
-        <img className="person-image"
+        <img alt="" className="person-image"
           src={image} />
 
         

@@ -23,7 +23,7 @@ const withData = (View) => {
 
   //проверяе на сменился ли источник данных
   componentDidUpdate(prevProps){
-    if(prevProps.getData != this.props.getData){
+    if(prevProps.getData !== this.props.getData){
       this.update();
     }
   }

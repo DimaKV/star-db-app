@@ -1,40 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import { PersonList, PersonDetails } from '../sw-components';
 import Row from '../row';
 import ErrorBoundary from '../error-boundary';
 
 
-export default class PeoplePage extends Component{
-    constructor(){
-        super()
-        this.state = {
-            activeItem: 1           
-        }
-    }
-
-    onItemSelected = (id) => {
-        this.setState({
-            activeItem: id            
-        });
-    }
-
-    render(){
-
-        const itemList = (
-            <PersonList onItemSelected = {this.onItemSelected} />
+const PeoplePage  = ( {match, history} ) => {
+   
+    const itemList = (
+        <PersonList onItemSelected = { (id) => {
+            history.push(id);
+        } } />
+    );
+    const personalDetails = ( 
+        <ErrorBoundary>
+            <PersonDetails activeItem = { match.params.id } />                
+        </ErrorBoundary>
         );
-        const personalDetails = ( 
-            <ErrorBoundary>
-                <PersonDetails activeItem = {this.state.activeItem} />                
-            </ErrorBoundary>
-            );
+    
 
-        return(
+    return(
 
-            <Row first = {itemList} second = {personalDetails} />
+        <Row first = {itemList} second = {personalDetails} />
 
-        )
+    )
 
-    }
 }
+
+export default PeoplePage;
